@@ -1,0 +1,14 @@
+MATRIX CELLS IN DISTANCE ORDER py3
+
+class Solution:
+    def allCellsDistOrder(self, R: int, C: int, r0: int, c0: int) -> List[List[int]]:
+        ans, queue, visited = [], [[r0, c0]], set([(r0, c0)])
+        for r, c in queue:
+            ans.append([r, c])
+            for i, j in [[0, -1], [0, 1], [-1, 0], [1, 0]]:
+                nextR, nextC = r + i, c + j
+                if nextR < 0 or nextR >= R or nextC < 0 or nextC >= C or (nextR, nextC) in visited:
+                    continue
+                queue.append([nextR, nextC])
+                visited.add((nextR, nextC))
+        return ans

@@ -1,0 +1,31 @@
+Find in Mountain Array.py
+
+class Solution:
+    def findInMountainArray(self, target: int, mountain_arr: 'MountainArray') -> int:
+        peakIndex, right = 0, mountain_arr.length() - 1
+        while peakIndex < right:
+            mid = peakIndex + (right - peakIndex >> 1)
+            if mountain_arr.get(mid) < mountain_arr.get(mid + 1):
+                peakIndex = mid + 1
+            else:
+                right = mid
+
+        # left-subArray (Increasing)
+        left, right = 0, peakIndex
+        while left < right:
+            mid = left + (right - left >> 1)
+            if mountain_arr.get(mid) >= target:
+                right = mid
+            else:
+                left = mid + 1
+        if (mountain_arr.get(left) == target): return left
+        
+        # right-subArray (Decreasing)
+        left, right = peakIndex, mountain_arr.length()
+        while left < right:
+            mid = left + (right - left >> 1)
+            if mountain_arr.get(mid) <= target:
+                right = mid
+            else:
+                left = mid + 1
+        return left if left < mountain_arr.length() and mountain_arr.get(left) == target else -1
